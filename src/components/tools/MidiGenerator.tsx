@@ -268,7 +268,7 @@ const MidiGenerator = () => {
             <label className="text-[10px] font-bold uppercase tracking-widest mb-1.5 block" style={{color:"rgba(255,255,255,0.3)"}}>Scale</label>
             <select value={scale} onChange={e=>{setScale(e.target.value);setGenerated(false);}}
               className="w-full rounded-lg px-3 py-2 text-sm text-white outline-none"
-              {style={{ background: "rgb(20,20,35)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}}
+              style={{ background: "rgb(20,20,35)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
             >{Object.keys(SCALES).map(s=><option key={s} value={s}>{s}</option>)}</select>
           </div>
           <div>
