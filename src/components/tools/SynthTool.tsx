@@ -98,7 +98,7 @@ const SynthTool = () => {
     return ()=>{ window.removeEventListener('keydown',down); window.removeEventListener('keyup',up); };
   }, [noteOn, noteOff]);
 
-  const whiteKeyWidth = 100/7; // percentage
+  const _whiteKeyWidth = 100/7; // percentage
 
   if(loadError) {
     return (
