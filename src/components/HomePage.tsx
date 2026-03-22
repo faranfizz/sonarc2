@@ -266,7 +266,7 @@ const HeroUploadBox = ({ onUpload, onSelectTool }: { onUpload: (file?: File) => 
         onDragOver={e => { e.preventDefault(); setDragging(true); }}
         onDragLeave={() => setDragging(false)}
         whileHover={{ borderColor: "rgba(255,255,255,0.35)", background: "rgba(255,255,255,0.05)" }}
-        className="cursor-pointer rounded-2xl flex items-center gap-5 px-7 py-5 transition-all"
+        className="cursor-pointer rounded-2xl flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 px-5 sm:px-7 py-5 transition-all"
         style={{
           background: dragging ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.03)",
           border: `1.5px dashed ${dragging ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.15)"}`,
@@ -284,7 +284,7 @@ const HeroUploadBox = ({ onUpload, onSelectTool }: { onUpload: (file?: File) => 
           </p>
           <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>MP3 · WAV · FLAC · AAC · OGG · MP4 · MOV</p>
         </div>
-        <div className="flex gap-1.5 shrink-0">
+        <div className="hidden sm:flex gap-1.5 shrink-0">
           {["MP3","WAV","FLAC","MP4"].map(f => (
             <span key={f} className="text-[9px] font-black px-2 py-1 rounded-lg"
               style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.35)", border: "1px solid rgba(255,255,255,0.08)" }}
@@ -292,7 +292,7 @@ const HeroUploadBox = ({ onUpload, onSelectTool }: { onUpload: (file?: File) => 
           ))}
         </div>
       </motion.div>
-      <div className="flex items-center gap-2 mt-3 flex-wrap">
+      <div className="flex items-center gap-2 mt-3 flex-wrap w-full">
         <span className="text-[10px] font-semibold" style={{ color: "rgba(255,255,255,0.22)" }}>Or jump to:</span>
         {[
           { label: "Detect BPM & Key", id: "bpm-detector" as ToolId },
@@ -347,7 +347,7 @@ export default function HomePage({ tools, onSelectTool, onUpload }: {
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom,rgba(10,10,10,0.05) 0%,transparent 15%,rgba(10,10,10,0.97) 100%)" }}/>
         <div className="absolute bottom-0 left-0 right-0" style={{ height: "180px" }}><HeroWave /></div>
 
-        <motion.div style={{ y: heroTextY, opacity: heroOp }} className="relative z-10 w-full px-10 lg:px-16">
+        <motion.div style={{ y: heroTextY, opacity: heroOp }} className="relative z-10 w-full px-6 md:px-10 lg:px-16">
           {/* Badge */}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             className="flex items-center gap-2 mb-8"
@@ -361,14 +361,14 @@ export default function HomePage({ tools, onSelectTool, onUpload }: {
           {/* Headline — OPTION C: words animate in on load + parallax on scroll */}
           <div className="mb-6" style={{ lineHeight: 1 }}>
             {/* Line 1 — white */}
-            <div className="flex items-baseline gap-[0.22em] flex-wrap">
+            <div className="flex items-baseline gap-[0.22em] flex-wrap" style={{wordSpacing:"0.1em"}}>
               {line1Words.map((word, i) => (
                 <motion.span key={i}
                   initial={{ opacity: 0, y: 60, rotateX: -15 }}
                   animate={{ opacity: 1, y: 0, rotateX: 0 }}
                   transition={{ delay: 0.2 + i * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   className="font-display font-black text-white inline-block"
-                  style={{ fontSize: "clamp(52px,8vw,120px)", letterSpacing: "-0.065em" }}
+                  style={{ fontSize: "clamp(36px,8vw,120px)", letterSpacing: "-0.065em" }}
                 >{word}</motion.span>
               ))}
             </div>
@@ -380,7 +380,7 @@ export default function HomePage({ tools, onSelectTool, onUpload }: {
                   animate={{ opacity: 1, y: 0, rotateX: 0 }}
                   transition={{ delay: 0.56 + i * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   className="font-display font-black inline-block"
-                  style={{ fontSize: "clamp(52px,8vw,120px)", letterSpacing: "-0.065em", color: "#555555" }}
+                  style={{ fontSize: "clamp(38px,8vw,120px)", letterSpacing: "-0.065em", color: "#555555" }}
                 >{word}</motion.span>
               ))}
             </div>
@@ -404,17 +404,17 @@ export default function HomePage({ tools, onSelectTool, onUpload }: {
       </section>
 
       {/* ══ UPLOAD SECTION ══ */}
-      <section className="px-10 lg:px-16 py-16 max-w-[1400px] mx-auto">
+      <section className="px-5 md:px-10 lg:px-16 py-12 md:py-16 max-w-[1400px] mx-auto">
         <HeroUploadBox onUpload={onUpload} onSelectTool={onSelectTool}/>
       </section>
 
       {/* ══ BPM DEMO ══ */}
-      <section className="px-10 lg:px-16 py-16 max-w-[1400px] mx-auto">
+      <section className="px-5 md:px-10 lg:px-16 py-12 md:py-16 max-w-[1400px] mx-auto">
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <div className="text-[10px] font-black tracking-[0.22em] uppercase mb-4" style={{ color: "rgba(167,139,250,0.5)" }}>Instant analysis</div>
-<AnimatedHeading white="Drop a track." grey="Know everything instantly." size="clamp(32px,5vw,60px)"/>
+<AnimatedHeading white="Drop a track." grey="Know everything instantly." size="clamp(26px,5vw,60px)"/>
         </motion.div>
-        <div className="grid grid-cols-2 gap-5 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
           {[
             { label: "BPM", value: "128", sub: "Fast / Dance · 4/4 time", conf: 88, detail: ["Dark beats","Hip-hop","Trap","Emotional pop"], type: "bpm" },
             { label: "Key", value: "A", sub: "Minor", conf: 91, detail: ["Dark beats","Hip-hop","Trap","Emotional pop"], type: "key" },
@@ -441,13 +441,13 @@ export default function HomePage({ tools, onSelectTool, onUpload }: {
       </section>
 
       {/* ══ STEMS ══ */}
-      <section className="px-10 lg:px-16 py-16 max-w-[1400px] mx-auto">
+      <section className="px-5 md:px-10 lg:px-16 py-12 md:py-16 max-w-[1400px] mx-auto">
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
           <div className="text-[10px] font-black tracking-[0.22em] uppercase mb-4" style={{ color: "rgba(167,139,250,0.5)" }}>Stem splitting</div>
-<AnimatedHeading white="One track in." grey="Four stems out." size="clamp(32px,5vw,60px)"/>
+<AnimatedHeading white="One track in." grey="Four stems out." size="clamp(26px,5vw,60px)"/>
         </motion.div>
-        <div className="flex items-start gap-16">
-          <div className="shrink-0" style={{ width: "360px", height: "220px", position: "relative" }}>
+        <div className="flex flex-col lg:flex-row items-start gap-10">
+          <div className="shrink-0 w-full lg:w-[360px]" style={{ height: "220px", position: "relative" }}>
             <DisplayCards cards={[
               { icon: <Layers className="w-4 h-4" style={{ color: "rgba(255,255,255,0.7)" }}/>, title: "Vocals", description: "Lead & backing vocals isolated", sub: "Download as WAV", color: "#888888" },
               { icon: <Music className="w-4 h-4" style={{ color: "rgba(255,255,255,0.7)" }}/>, title: "Drums", description: "Full drum kit separated", sub: "Download as WAV", color: "#666666" },
@@ -487,7 +487,7 @@ export default function HomePage({ tools, onSelectTool, onUpload }: {
       {/* ══ FULL BLEED — AudioLab ══ */}
       <section className="relative">
         <ScrollZoomImage src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=1400&q=80&fit=crop" height={400}/>
-        <div className="absolute inset-0 flex items-end p-14">
+        <div className="absolute inset-0 flex items-end p-6 md:p-14">
           <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <div className="text-[10px] font-black tracking-[0.2em] uppercase mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>AudioLab</div>
             <h2 className="font-display font-black text-white leading-none mb-4"
@@ -503,17 +503,17 @@ export default function HomePage({ tools, onSelectTool, onUpload }: {
       </section>
 
       {/* ══ PRODUCER TOOLS ══ */}
-      <section id="tools" className="px-10 lg:px-16 py-20 max-w-[1400px] mx-auto">
-        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 flex items-end justify-between flex-wrap gap-6">
+      <section id="tools" className="px-5 md:px-10 lg:px-16 py-14 md:py-20 max-w-[1400px] mx-auto">
+        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8 md:mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-6">
           <div>
             <div className="text-[10px] font-black tracking-[0.22em] uppercase mb-3" style={{ color: "rgba(167,139,250,0.5)" }}>For Producers</div>
-  <AnimatedHeading white="Build, chop &" grey="master your tracks." size="clamp(28px,4.5vw,56px)"/>
+  <AnimatedHeading white="Build, chop &" grey="master your tracks." size="clamp(24px,4.5vw,56px)"/>
           </div>
           <p className="text-sm font-light max-w-xs" style={{ color: "rgba(255,255,255,0.4)", lineHeight: 1.8 }}>
             Drum sequencer, sample chopper, professional mastering — all in your browser.
           </p>
         </motion.div>
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {producerTools.map((tool, i) => <ToolCard key={tool.id} tool={tool} index={i} onSelect={onSelectTool}/>)}
         </div>
       </section>
@@ -521,7 +521,7 @@ export default function HomePage({ tools, onSelectTool, onUpload }: {
       {/* ══ FULL BLEED 2 ══ */}
       <section className="relative">
         <ScrollZoomImage src="https://images.unsplash.com/photo-1619983081563-430f63602796?w=1400&q=80&fit=crop" height={360}/>
-        <div className="absolute inset-0 flex items-end p-14">
+        <div className="absolute inset-0 flex items-end p-6 md:p-14">
           <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <div className="text-[10px] font-black tracking-[0.2em] uppercase mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Stem Splitter</div>
             <h2 className="font-display font-black text-white leading-none mb-4"
@@ -537,37 +537,37 @@ export default function HomePage({ tools, onSelectTool, onUpload }: {
       </section>
 
       {/* ══ CREATOR TOOLS ══ */}
-      <section id="creators" className="px-10 lg:px-16 py-20 max-w-[1400px] mx-auto">
-        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 flex items-end justify-between flex-wrap gap-6">
+      <section id="creators" className="px-5 md:px-10 lg:px-16 py-14 md:py-20 max-w-[1400px] mx-auto">
+        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8 md:mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-6">
           <div>
             <div className="text-[10px] font-black tracking-[0.22em] uppercase mb-3" style={{ color: "rgba(167,139,250,0.5)" }}>For Creators</div>
-  <AnimatedHeading white="Edit, record &" grey="visualize your audio." size="clamp(28px,4.5vw,56px)"/>
+  <AnimatedHeading white="Edit, record &" grey="visualize your audio." size="clamp(24px,4.5vw,56px)"/>
           </div>
           <p className="text-sm font-light max-w-xs" style={{ color: "rgba(255,255,255,0.4)", lineHeight: 1.8 }}>
             Convert video, record voice, create visualizations for YouTube and Instagram.
           </p>
         </motion.div>
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {creatorTools.map((tool, i) => <ToolCard key={tool.id} tool={tool} index={i} onSelect={onSelectTool}/>)}
         </div>
       </section>
 
       {/* ══ MORE TOOLS ══ */}
       {moreTools.length > 0 && (
-        <section className="px-10 lg:px-16 pb-16 max-w-[1400px] mx-auto">
+        <section className="px-5 md:px-10 lg:px-16 pb-10 md:pb-16 max-w-[1400px] mx-auto">
           <div className="text-[10px] font-black tracking-[0.22em] uppercase mb-6" style={{ color: "rgba(255,255,255,0.2)" }}>More tools</div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {moreTools.map((tool, i) => <ToolCard key={tool.id} tool={tool} index={i} onSelect={onSelectTool}/>)}
           </div>
         </section>
       )}
 
       {/* ══ RAW TO READY ══ */}
-      <section className="px-10 lg:px-16 py-20 max-w-[1400px] mx-auto">
+      <section className="px-5 md:px-10 lg:px-16 py-14 md:py-20 max-w-[1400px] mx-auto">
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
-  <AnimatedHeading white="Raw to Ready." grey="In seconds." size="clamp(32px,5vw,60px)"/>
+  <AnimatedHeading white="Raw to Ready." grey="In seconds." size="clamp(26px,5vw,60px)"/>
         </motion.div>
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="rounded-2xl overflow-hidden" style={{ background: "#181818", border: "1px solid rgba(255,255,255,0.08)" }}
           >
@@ -647,7 +647,7 @@ export default function HomePage({ tools, onSelectTool, onUpload }: {
       </section>
 
       {/* ══ CONTAINER SCROLL ══ */}
-      <section className="px-10 lg:px-16 py-16 max-w-[1400px] mx-auto">
+      <section className="px-5 md:px-10 lg:px-16 py-12 md:py-16 max-w-[1400px] mx-auto">
         <ContainerScroll
           containerRef={pageRef}
           titleComponent={
@@ -683,7 +683,7 @@ export default function HomePage({ tools, onSelectTool, onUpload }: {
 
       {/* ══ FEEDBACK ══ */}
       <section className="feedback-section px-10 lg:px-16 py-20 max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6"
               style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
@@ -715,12 +715,12 @@ export default function HomePage({ tools, onSelectTool, onUpload }: {
 
       {/* Footer */}
       <footer className="px-10 lg:px-16 py-8" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <div className="max-w-[1400px] mx-auto flex items-center justify-between flex-wrap gap-4">
+        <div className="max-w-[1400px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between flex-wrap gap-4">
           <span className="font-display font-black text-lg" style={{ letterSpacing: "-0.06em" }}>
             <span style={{ color: "#FFFFFF" }}>SON</span><span style={{background:"linear-gradient(135deg,#A78BFA,#22D3EE)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>ARC</span>
           </span>
           <p className="text-xs" style={{ color: "rgba(255,255,255,0.12)" }}>© 2025 Sonarc · Free audio tools for everyone</p>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 flex-wrap">
             {[
               { label: "Contact", href: "mailto:sonarc@feedback.com" },
               { label: "Privacy Policy", href: "/privacy" },
