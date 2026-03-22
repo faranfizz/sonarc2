@@ -350,7 +350,7 @@ const DrumMachine = () => {
 
   const randomizeGrid = () => {
     const newGrid = generateRandomPattern(kit);
-    setGrid(newGrid);
+    setGrid(newGrid as boolean[][]);
     setPlaying(false);
     try { localStorage.setItem("sonarc-drum-grid", JSON.stringify(newGrid)); } catch {}
   };

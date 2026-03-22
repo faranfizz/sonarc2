@@ -68,8 +68,6 @@ async function masterAudio(buffer: AudioBuffer, preset: Preset): Promise<AudioBu
   const outGain = ctx.createGain(); outGain.gain.value = 0.8 + s.limiting*0.15;
 
   // Stereo width (simple mid-side)
-  const merger = ctx.createChannelMerger(2);
-  const splitter = ctx.createChannelSplitter(2);
 
   src.connect(lowShelf);
   lowShelf.connect(midPeak);

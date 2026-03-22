@@ -80,7 +80,7 @@ async function processAudio(
 
   // Fade in
   if (effects.fadeIn > 0) {
-    const fadeInSamples = effects.fadeIn * sr;
+    //const fadeInSamples = effects.fadeIn * sr;
     comp.gain?.setValueAtTime(0, 0); // not a gain node, use vol
     vol.gain.setValueAtTime(0, 0);
     vol.gain.linearRampToValueAtTime(effects.volume, effects.fadeIn);

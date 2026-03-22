@@ -152,7 +152,7 @@ function writeMidi(notes: Note[], bpm: number): Blob {
   const tpb = 480;
   const toTicks = (beats: number) => Math.round(beats * tpb);
   const events: {tick:number,data:number[]}[] = [];
-  const tempo = Math.round(60000000 / _bpm);
+  const tempo = Math.round(60000000 / bpm);
   events.push({tick:0,data:[0xFF,0x51,0x03,(tempo>>16)&0xFF,(tempo>>8)&0xFF,tempo&0xFF]});
   events.push({tick:0,data:[0xFF,0x58,0x04,4,2,24,8]});
   notes.forEach(n => {
