@@ -2,7 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mic, Square, Download, Play, Pause, RefreshCw } from "lucide-react";
 
-//function audioBufferToWav(buffer: AudioBuffer): Blob {
+function audioBufferToWav(buffer: AudioBuffer): Blob {
   const numCh=buffer.numberOfChannels,len=buffer.length*numCh*2;
   const ab=new ArrayBuffer(44+len);const view=new DataView(ab);const sr=buffer.sampleRate;
   const ws=(o:number,s:string)=>{for(let i=0;i<s.length;i++)view.setUint8(o+i,s.charCodeAt(i));};
@@ -23,7 +23,7 @@ export default function VoiceRecorder() {
   const [duration, setDuration] = useState(0);
   const [error, setError] = useState('');
   const [volume, setVolume] = useState(0);
-  //const [waveData, setWaveData] = useState<number[]>([]);
+
 
   const mediaRecRef = useRef<MediaRecorder|null>(null);
   const chunksRef = useRef<Blob[]>([]);
