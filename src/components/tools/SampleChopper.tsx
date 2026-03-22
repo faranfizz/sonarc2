@@ -57,7 +57,7 @@ const SampleChopper = () => {
   const [loading, setLoading] = useState(false);
   const ctxRef = useRef<AudioContext | null>(null);
   const sourceRef = useRef<AudioBufferSourceNode | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const _canvasRef = useRef<HTMLCanvasElement>(null);
 
   const getCtx = () => {
     if(!ctxRef.current) ctxRef.current = new AudioContext();

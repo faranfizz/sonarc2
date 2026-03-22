@@ -98,7 +98,7 @@ const SynthTool = () => {
     return ()=>{ window.removeEventListener('keydown',down); window.removeEventListener('keyup',up); };
   }, [noteOn, noteOff]);
 
-  const _whiteKeyWidth = 100/7; // percentage
+  const __whiteKeyWidth = 100/7; // percentage
 
   if(loadError) {
     return (
@@ -188,7 +188,7 @@ const SynthTool = () => {
           <div className="relative h-44 select-none">
             {/* White keys */}
             <div className="flex h-full gap-[2px]">
-              {WHITE_NOTES.map((note,i)=>{
+              {WHITE_NOTES.map((note) =>{
                 const fullNote = `${note}${octave}`;
                 const isPressed = pressedKeys.has(fullNote);
                 return (

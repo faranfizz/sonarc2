@@ -152,7 +152,7 @@ function writeMidi(notes: Note[], bpm: number): Blob {
   const tpb = 480;
   const toTicks = (beats: number) => Math.round(beats * tpb);
   const events: {tick:number,data:number[]}[] = [];
-  const tempo = Math.round(60000000 / bpm);
+  const tempo = Math.round(60000000 / _bpm);
   events.push({tick:0,data:[0xFF,0x51,0x03,(tempo>>16)&0xFF,(tempo>>8)&0xFF,tempo&0xFF]});
   events.push({tick:0,data:[0xFF,0x58,0x04,4,2,24,8]});
   notes.forEach(n => {
@@ -202,8 +202,8 @@ const MidiGenerator = () => {
     if (!notes.length) { generate(); return; }
     const ctx = new AudioContext(); ctxRef.current = ctx;
     setPlaying(true);
-    playNotesAudio(ctx, notes, bpm, () => { setPlaying(false); ctxRef.current = null; });
-  }, [playing, notes, bpm, generate]);
+    playNotesAudio(ctx, notes, () => { setPlaying(false); ctxRef.current = null; });
+  }, [playing, notes, generate]);
 
   const download = useCallback(() => {
     const n = notes.length ? notes : generateNotes(style, vibe, key, scale, bars, bpm);
@@ -268,7 +268,7 @@ const MidiGenerator = () => {
             <label className="text-[10px] font-bold uppercase tracking-widest mb-1.5 block" style={{color:"rgba(255,255,255,0.3)"}}>Scale</label>
             <select value={scale} onChange={e=>{setScale(e.target.value);setGenerated(false);}}
               className="w-full rounded-lg px-3 py-2 text-sm text-white outline-none"
-              style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)"}}
+              {style={{ background: "rgb(20,20,35)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}}
             >{Object.keys(SCALES).map(s=><option key={s} value={s}>{s}</option>)}</select>
           </div>
           <div>

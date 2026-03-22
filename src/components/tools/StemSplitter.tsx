@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Upload, Download, Play, Square, Layers } from "lucide-react";
+import { Download, Play, Square, Layers } from "lucide-react";
 
 const STEMS = [
   { key:'vocals',  label:'Vocals',  color:'#10B981', icon:'🎤' },
@@ -109,7 +109,7 @@ const StemSplitter = () => {
 
   const statusMessages = {
     idle: 'Ready to split',
-    uploading: 'Uploading audio...',
+    uploading: 'ing audio...',
     processing: 'AI is separating stems...',
     done: 'Stems ready',
     error: 'Something went wrong',
@@ -117,7 +117,7 @@ const StemSplitter = () => {
 
   return (
     <div className="max-w-2xl mx-auto space-y-5">
-      {/* Upload */}
+      {/**/}
       <motion.div
         onClick={()=>document.getElementById('stem-upload')?.click()}
         onDrop={e=>{e.preventDefault();const f=e.dataTransfer.files[0];if(f)handleFile(f);}}

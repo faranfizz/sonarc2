@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mic, Square, Download, Play, Pause, RefreshCw } from "lucide-react";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function audioBufferToWav(buffer: AudioBuffer): Blob {
   const numCh=buffer.numberOfChannels,len=buffer.length*numCh*2;
   const ab=new ArrayBuffer(44+len);const view=new DataView(ab);const sr=buffer.sampleRate;
