@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 25% 3%;
+    --foreground: 220 15% 93%;
+    --card: 240 20% 5.5%;
+    --card-foreground: 220 15% 93%;
+    --popover: 240 20% 5.5%;
+    --popover-foreground: 220 15% 93%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 15% 9%;
+    --secondary-foreground: 220 15% 93%;
+    --muted: 240 15% 9%;
+    --muted-foreground: 240 8% 42%;
+    --accent: 240 15% 12%;
+    --accent-foreground: 220 15% 93%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 15% 11%;
+    --input: 240 15% 11%;
+    --ring: 217 91% 60%;
+    --radius: 0.625rem;
+    --sidebar: 240 28% 3.5%;
+    --sidebar-border: 240 15% 9%;
+    --sidebar-foreground: 240 8% 48%;
+    --sidebar-active: 220 15% 93%;
+    --success: 142 71% 45%;
+    --warning: 38 92% 50%;
+  }
+}
+
+@layer base {
+  * { border-color: rgba(255,255,255,0.08); }
+  body {
+    background-color: #0F0F0F; color: #FFFFFF; -webkit-font-smoothing: antialiased;
+    font-family: 'Manrope', -apple-system, sans-serif;
+    font-feature-settings: 'cv02','cv03','cv04','cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1,h2,h3,h4,h5,h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.04em;
+    font-weight: 800;
+  }
+}
+
+@layer components {
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+  /* Cinematic glow effects */
+  .glow-blue {
+    box-shadow: 0 0 30px -6px rgba(59,130,246,0.5), 0 0 60px -12px rgba(59,130,246,0.25);
+  }
+  .glow-blue-sm {
+    box-shadow: 0 0 15px -4px rgba(59,130,246,0.4);
+  }
+  .text-glow {
+    text-shadow: 0 0 20px rgba(59,130,246,0.6);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #60A5FA, #06B6D4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Cards */
+  .card-cinematic {
+    background: #1A1A1A; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+    background: linear-gradient(135deg, hsl(240 20% 6%) 0%, hsl(240 20% 5%) 100%);
+    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+  .card-cinematic:hover {
+    border-color: rgba(59,130,246,0.2);
+    box-shadow: 0 0 30px -8px rgba(59,130,246,0.15), 0 20px 40px -12px rgba(0,0,0,0.5);
+    transform: translateY(-1px);
+  }
+
+  /* Buttons */
+  .btn-primary {
+    background: linear-gradient(135deg,#7C3AED,#06B6D4); color: white; border-radius: 8px; font-weight: 600; transition: all 0.2s;
+    font-family: 'Manrope', sans-serif;
+    box-shadow: 0 0 20px -4px rgba(59,130,246,0.4);
+  }
+  .btn-primary:hover {
+    background: #2563EB;
+    box-shadow: 0 0 30px -4px rgba(59,130,246,0.6), 0 8px 20px -4px rgba(59,130,246,0.3);
+    transform: translateY(-1px);
+  }
+  .btn-ghost {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: rgba(255,255,255,0.5); transition: all 0.2s;
+    font-family: 'Manrope', sans-serif;
+  }
+  .btn-ghost:hover {
+    color: #FFFFFF; border-color: rgba(124,58,237,0.3);
+    background: rgba(59,130,246,0.06);
+  }
+
+  /* Active pad glow for drum machine */
+  .pad-active {
+    background: rgba(59,130,246,0.15) !important;
+    border-color: rgba(59,130,246,0.5) !important;
+    box-shadow: 0 0 20px -4px rgba(59,130,246,0.4), inset 0 0 12px rgba(59,130,246,0.1) !important;
+  }
+
+  /* Waveform bar animation */
+  .waveform-active .wv-bar {
+    animation: wvbar 0.8s ease-in-out infinite;
+  }
+  @keyframes wvbar {
+    0%,100% { transform: scaleY(0.2); }
+    50% { transform: scaleY(1); }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+
+  /* Input range */
+  input[type=range] {
+    -webkit-appearance: none;
+    background: transparent;
+  }
+  input[type=range]::-webkit-slider-track {
+    height: 3px;
+    border-radius: 2px;
+    background: hsl(var(--secondary));
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #3B82F6;
+    margin-top: -5.5px;
+    box-shadow: 0 0 8px rgba(59,130,246,0.5);
+    cursor: pointer;
+  }
+}
+
+/* Ensure font loads */
+@layer base {
+  .font-display { font-family: 'Plus Jakarta Sans', sans-serif !important; font-weight: 800; }
+}
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
+
+/* Selection */
+::selection { background: rgba(59,130,246,0.3); color: white; }
+
+.font-display { font-family: 'Plus Jakarta Sans', sans-serif !important; font-weight: 800; }

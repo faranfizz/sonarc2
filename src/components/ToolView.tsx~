@@ -1,0 +1,110 @@
+import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import type { Tool } from "@/pages/Index";
+import DrumMachine from "@/components/tools/DrumMachine";
+import LoopGenerator from "@/components/tools/LoopGenerator";
+import MidiGenerator from "@/components/tools/MidiGenerator";
+import SampleChopper from "@/components/tools/SampleChopper";
+import StemSplitter from "@/components/tools/StemSplitter";
+
+const toolComponents = { drumachine:DrumMachine, loopgen:LoopGenerator, midigen:MidiGenerator, chopper:SampleChopper, splitter:StemSplitter };
+
+// Per-tool animated banner canvas
+const BannerCanvas = ({ tool }: { tool: Tool }) => {
+  const ref = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const c = ref.current!; const ctx = c.getContext("2d")!;
+    let raf: number, t = 0;
+    const resize = () => { c.width = c.offsetWidth; c.height = c.offsetHeight; };
+    resize();
+    const ro = new ResizeObserver(resize); ro.observe(c);
+    const color = tool.color;
+    const draw = () => {
+      const W = c.width, H = c.height;
+      ctx.clearRect(0, 0, W, H); t += .006;
+      // 3 sine waves specific to each tool
+      const waves = [
+        { amp: H*.4, freq: .012, speed: 1, a: .5, thick: 2 },
+        { amp: H*.3, freq: .018, speed: 1.4, a: .35, thick: 1.5 },
+        { amp: H*.5, freq: .008, speed: .7, a: .2, thick: 2.5 },
+      ];
+      waves.forEach((w, i) => {
+        ctx.beginPath();
+        for (let x = 0; x <= W; x += 3) {
+          const y = H/2 + Math.sin(x*w.freq + t*w.speed + i) * w.amp;
+          x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+        const grad = ctx.createLinearGradient(0,0,W,0);
+        grad.addColorStop(0, color+"00"); grad.addColorStop(.3, color+Math.round(w.a*255).toString(16).padStart(2,"0")); grad.addColorStop(.7, color+Math.round(w.a*255).toString(16).padStart(2,"0")); grad.addColorStop(1, color+"00");
+        ctx.strokeStyle = grad; ctx.lineWidth = w.thick; ctx.globalAlpha = 1; ctx.stroke();
+      });
+      // Bright spine
+      ctx.beginPath();
+      for (let x = 0; x <= W; x += 2) {
+        const y = H/2 + Math.sin(x*.012 + t) * H*.4;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.globalAlpha = .8; ctx.stroke(); ctx.globalAlpha = 1;
+      raf = requestAnimationFrame(draw);
+    };
+    draw();
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+  }, [tool.color]);
+  return <canvas ref={ref} className="absolute inset-0 w-full h-full" style={{filter:`drop-shadow(0 0 20px ${tool.color}60)`}}/>;
+};
+
+const WaveBar = ({ color }: { color: string }) => (
+  <div className="flex items-center gap-[3px] h-6">
+    {Array.from({length:18},(_,i) => (
+      <motion.div key={i} className="w-[2.5px] rounded-full" style={{background:color}}
+        animate={{scaleY:[0.15,0.15+Math.random()*0.85,0.15]}}
+        transition={{duration:.6+Math.random()*.5,repeat:Infinity,repeatType:"reverse",delay:i*.05}}
+      />
+    ))}
+  </div>
+);
+
+const ToolView = ({ tool, onBack }: { tool: Tool; onBack: () => void }) => {
+  const Component = toolComponents[tool.id as keyof typeof toolComponents];
+  const Icon = tool.icon;
+  return (
+    <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-16}} transition={{duration:.4,ease:[0.16,1,0.3,1]}}
+      className="absolute inset-0 flex flex-col overflow-hidden" style={{background:"#050508"}}
+    >
+      <div className="absolute inset-0 pointer-events-none" style={{background:tool.gradient,opacity:.3}}/>
+      <div className="absolute top-0 left-0 right-0 h-80 pointer-events-none" style={{background:`radial-gradient(ellipse at 20% 0%,${tool.color}15,transparent 55%)`}}/>
+
+      {/* Banner */}
+      <div className="relative shrink-0 overflow-hidden" style={{height:"110px",borderBottom:"1px solid rgba(255,255,255,0.06)"}}>
+        <BannerCanvas tool={tool}/>
+        <div className="absolute inset-0" style={{background:`linear-gradient(90deg,${tool.color}10 0%,transparent 40%)`}}/>
+        <div className="absolute inset-0" style={{background:"linear-gradient(to bottom,transparent,rgba(5,5,8,0.85))"}}/>
+        <div className="relative z-10 h-full flex items-center justify-between px-10">
+          <motion.div initial={{opacity:0,x:-20}} animate={{opacity:1,x:0}} transition={{delay:.1,duration:.5,ease:[0.16,1,0.3,1]}} className="flex items-center gap-5">
+            <div className="w-11 h-11 rounded-2xl flex items-center justify-center" style={{background:`${tool.color}18`,border:`1px solid ${tool.color}30`,boxShadow:`0 0 24px ${tool.color}30`}}>
+              <Icon className="w-5 h-5" style={{color:tool.color}}/>
+            </div>
+            <div>
+              <div className="text-[9px] font-black tracking-[0.18em] uppercase mb-1" style={{color:tool.color}}>{tool.tagline}</div>
+              <h1 className="font-display font-black text-white text-2xl leading-none" style={{letterSpacing:"-0.055em",color:"#F5F0E8"}}>{tool.label}</h1>
+            </div>
+            <div className="ml-4 hidden md:block"><WaveBar color={tool.color}/></div>
+          </motion.div>
+          <motion.div initial={{opacity:0,x:16}} animate={{opacity:1,x:0}} transition={{delay:.15}} className="flex items-center gap-5">
+            <p className="text-sm hidden lg:block font-light" style={{color:"rgba(255,255,255,0.3)",maxWidth:"260px",lineHeight:1.6}}>{tool.description}</p>
+            <motion.button onClick={onBack} whileHover={{x:-3}} whileTap={{scale:.96}}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold shrink-0 transition-all"
+              style={{color:"rgba(255,255,255,0.35)",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.09)"}}
+            >← Back</motion.button>
+          </motion.div>
+        </div>
+      </div>
+
+      <motion.div className="flex-1 overflow-y-auto relative z-10 p-10" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.22,duration:.5,ease:[0.16,1,0.3,1]}}>
+        <Component/>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+export default ToolView;
