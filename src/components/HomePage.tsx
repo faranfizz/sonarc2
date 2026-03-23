@@ -339,7 +339,7 @@ export default function HomePage({ tools, onSelectTool, onUpload }: {
       {/* ══ HERO ══ */}
       <section ref={heroRef} className="relative h-screen overflow-hidden flex items-end pb-24">
         <motion.div className="absolute inset-0" style={{ scale: heroImgScale, transformOrigin: "center center" }}>
-          <img src="/images/hero.png" alt="" className="w-full h-full object-cover"
+          <img src="https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=1800&q=85&fit=crop" alt="" className="w-full h-full object-cover"
             style={{ filter: "brightness(0.35) saturate(1.1)" }}
           />
         </motion.div>
